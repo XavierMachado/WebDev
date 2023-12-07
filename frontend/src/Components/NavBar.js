@@ -1,4 +1,4 @@
-export default function NavBar({title}){
+export default function NavBar({title, isLoggedIn}){
     function open_sidebar() {
       document.getElementById("sidebar").style.width = "250px";
     }
@@ -12,8 +12,17 @@ export default function NavBar({title}){
       <div id="sidebar" class="sidenav">
         <button class="closebtn" onClick={close_sidebar}>&times;</button>
         <a href="/">Home</a>
-        <a href="/inventory">Inventory</a>
-        <a href="/search">Search</a>
+        {isLoggedIn && (
+        <>
+          <a href="/inventory">Inventory</a>
+        </>
+        )}
+        {!isLoggedIn && (
+        <>
+          <a href="/LoginPage">Login</a>
+          <a href="/RegistrationPage">Register</a>
+        </>
+        )}
       </div>
       <span style={{fontSize:'30px', cursor: 'pointer', padding: '15px' }} onClick={open_sidebar}>&#9776;</span>
       <h1 class="htitle">{title}</h1>
