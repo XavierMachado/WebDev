@@ -1,13 +1,14 @@
 import LoginPage from "./Components/LoginPage";
 import RegistrationPage from "./Components/RegistrationPage";
-import Header from "./Components/Header"
+//import Header from "./Components/Header"
 import Inventory from "./Pages/inventory";
+import NavBar from "./Components/NavBar.js";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 function App() {
     return (
         <Router>
-        <Header/>
+        <NavBar title='Inventory Manager'/>
             <div>
         <Routes>
             <Route exact path = '/' element = {
