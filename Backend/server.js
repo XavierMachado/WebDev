@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 });
 
 const getDatabaseConfig = async () => {
-  const host = '127.0.0.1'; //Instead of the localhost database, this SHOULD be the database hosted in mySQL.
+  const host = '127.0.0.1'; //Instead of the localhost database, this SHOULD be the database hosted in mySQL.  OLD CODE: const host = 'localhost';
 
   const questionAsync = (prompt) =>
     new Promise((resolve) => rl.question(prompt, resolve));
@@ -38,7 +38,7 @@ const startServer = async () => {
   // Use the cors middleware
   app.use(cors());
 
-  app.get('/api/inventory_schema', async (req, res) => {
+  app.get('/api/inventory_schema', async (req, res) => { //This is the now correct routing. old code: replace inventory_schema with INVENTORY on all accounts, aswell as inventory_table
     try {
       const [rows] = await connection.execute('SELECT * FROM inventory_table');
       res.json(rows);
