@@ -26,7 +26,7 @@ const getDatabaseConfig = async () => {
     host,
     user,
     password,
-    database: 'inventory_schema',
+    database: 'inventory',
   };
 };
 
@@ -38,9 +38,9 @@ const startServer = async () => {
   // Use the cors middleware
   app.use(cors());
 
-  app.get('/api/inventory_schema', async (req, res) => { //This is the now correct routing. old code: replace inventory_schema with INVENTORY on all accounts, aswell as inventory_table
+  app.get('/api/inventory', async (req, res) => {
     try {
-      const [rows] = await connection.execute('SELECT * FROM inventory_table');
+      const [rows] = await connection.execute('SELECT * FROM inventory');
       res.json(rows);
     } catch (error) {
       console.error(error);
