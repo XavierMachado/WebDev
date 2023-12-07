@@ -1,33 +1,50 @@
 const express = require('express');
+const mysql = require('mysql');
+const { getpass } = require('getpass');
+
 const app = express();
-const dotenv = require('dotenv').config
-const port = process.env.port || 8000;
-const mongoose = require('mongoose')
-const cors = require('cors')
+const port = 8000;
 
+const getDatabaseConfig = async () => {
+  const host = 'localhost';
+  const user = await new Promise((resolve) => {
+    const readline = require('readline').createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    readline.question('Enter username: ', (username) => {
+      readline.close();
+      resolve(username);
+    });
+  });
 
-app.use(cors())
+  const password = getpass('Enter password: ');
 
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    allowedHeaders: ['Content-Type', 'Authorization'],
+  return {
+    host,
+    user,
+    password,
+    database: 'INVENTORY', // Set your database name here
+  };
 };
 
-app.use(cors(corsOptions));
+const startServer = async () => {
+  const databaseConfig = await getDatabaseConfig();
 
-mongoose.connect('mongodb+srv://')
-.then(()=>{
-    console.log('connected to database')
-})
-.catch(()=>{
-    console.log('connection error')
-})
+  const connection = mysql.createConnection(databaseConfig);
 
-app.use(express.json())
-app.use(express.urlencoded({extended:false}))
+  connection.connect();
 
-app.get('/', (req, res)=> res.status(200)).json({message:'Here'})
+  app.get('/api/data', (req, res) => {
+    connection.query('SELECT * FROM your_table', (error, results) => {
+      if (error) throw error;
+      res.json(results);
+    });
+  });
 
-app.use('/api/users', require('./router/pageRoutes'))
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+};
 
-app.listen(port, () => console.log('Example app listening on port 3000'))
+startServer();
