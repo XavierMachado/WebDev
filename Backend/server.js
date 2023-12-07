@@ -12,13 +12,13 @@ const rl = readline.createInterface({
 });
 
 const getDatabaseConfig = async () => {
-  const host = 'localhost';
+  const host = '127.0.0.1'; //Instead of the localhost database, this SHOULD be the database hosted in mySQL.
 
   const questionAsync = (prompt) =>
     new Promise((resolve) => rl.question(prompt, resolve));
 
-  const user = await questionAsync('Enter username: ');
-  const password = await questionAsync('Enter password: ');
+  const user = await questionAsync('Enter username: '); // ************ USER IS root
+  const password = await questionAsync('Enter password: '); // **************** PASSWORD IS password
 
   rl.close();
 
@@ -26,7 +26,7 @@ const getDatabaseConfig = async () => {
     host,
     user,
     password,
-    database: 'INVENTORY',
+    database: 'inventory_schema',
   };
 };
 
@@ -38,9 +38,9 @@ const startServer = async () => {
   // Use the cors middleware
   app.use(cors());
 
-  app.get('/api/inventory', async (req, res) => {
+  app.get('/api/inventory_schema', async (req, res) => {
     try {
-      const [rows] = await connection.execute('SELECT * FROM INVENTORY');
+      const [rows] = await connection.execute('SELECT * FROM inventory_table');
       res.json(rows);
     } catch (error) {
       console.error(error);
