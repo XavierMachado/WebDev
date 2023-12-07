@@ -12,7 +12,7 @@ const rl = readline.createInterface({
 });
 
 const getDatabaseConfig = async () => {
-  const host = '127.0.0.1'; //Instead of the localhost database, this SHOULD be the database hosted in mySQL.  OLD CODE: const host = 'localhost';
+  const host = '18.207.187.185'; //Instead of the localhost database, this SHOULD be the database hosted in mySQL.  OLD CODE: const host = 'localhost';
 
   const questionAsync = (prompt) =>
     new Promise((resolve) => rl.question(prompt, resolve));
@@ -23,10 +23,10 @@ const getDatabaseConfig = async () => {
   rl.close();
 
   return {
-    host,
-    user,
-    password,
-    database: 'inventory',
+    host      : host,
+    user      : user,
+    password  : password,
+    database  : 'inventory',
   };
 };
 
