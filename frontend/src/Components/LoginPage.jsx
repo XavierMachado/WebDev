@@ -1,33 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const LoginPage = ({ message }) => {
+const LoginPage = () => {
+  const navigate = useNavigate();
+  const [message, setMessage] = useState('');
+
+  const handleLogin = () => {
+    axios.get('http://localhost:8000').then(
+      (res) => {
+        console.log(res);
+        setMessage(res.data);
+      }
+    );
+    navigate('/inventory');
+  };
+
   return (
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Login</title>
-        <link rel="stylesheet" type="text/css" href="/css/login.css" />
-      </head>
-      <body>
-        <h1>Login Page</h1>
-        {message && <p>{message}</p>}
-        <form action="/LoginPage" method="post">
-          <div>
-            <label htmlFor="email">Email:</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div>
-            <label htmlFor="password">Password:</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <section>
-            <button type="submit">Login</button>
-          </section>
-          <a href="/RegistrationPage">Create Login</a>
-        </form>
-      </body>
-    </html>
+    <div>
+      <h1>Login Page</h1>
+      {message && <p>{message}</p>}
+      <form action="/LoginPage" method="post">
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <section>
+          <button type="button" onClick={handleLogin}>
+            Login
+          </button>
+        </section>
+        <a href="/RegistrationPage">Create Login</a>
+      </form>
+    </div>
   );
 };
 
