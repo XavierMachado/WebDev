@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NavBar from "../Components/NavBar.js";
+
 
 function InventoryManager() {
   const [inventory, setInventory] = useState([]);
@@ -54,6 +56,7 @@ function InventoryManager() {
 
   return (
     <div>
+      <NavBar title='Inventory Manager' isLoggedIn={true}/>
       <h1>Inventory Manager</h1>
       <form onSubmit={handleSubmit}>
         <div>

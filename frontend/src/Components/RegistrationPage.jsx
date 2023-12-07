@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import NavBar from "./NavBar.js";
+
 
 const RegistrationPage = () => {
   const navigate = useNavigate();  // Use useNavigate hook
@@ -32,6 +34,7 @@ const RegistrationPage = () => {
 
   return (
     <div>
+      <NavBar title='Inventory Manager' isLoggedIn={false}/>
       <header>
         <h1>Registration Page</h1>
       </header>

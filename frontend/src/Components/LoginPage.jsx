@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import NavBar from "./NavBar.js";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const LoginPage = () => {
 
   return (
     <div>
+      <NavBar title='Inventory Manager' isLoggedIn={false}/>
       <h1>Login Page</h1>
       {message && <p>{message}</p>}
       <form action="/LoginPage" method="post">

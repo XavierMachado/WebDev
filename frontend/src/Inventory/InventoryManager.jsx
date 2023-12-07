@@ -1,6 +1,7 @@
 // InventoryManager.js
 import React, { useState, useEffect } from 'react';
 import InventoryService from './InventoryService'; // Assuming this is the file for API calls
+import NavBar from "../Components/NavBar.js";
 
 function InventoryManager() {
   const [inventory, setInventory] = useState([]);
@@ -55,6 +56,7 @@ function InventoryManager() {
 
   return (
     <div>
+      <NavBar title='Inventory Manager' isLoggedIn={true}/>
       <h1>Inventory Manager</h1>
       <form onSubmit={handleSubmit}>
         {/* ... (input fields) */}
