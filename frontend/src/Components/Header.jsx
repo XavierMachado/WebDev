@@ -7,8 +7,8 @@ function Header({text, bgColor, textColor}) {
     }
     return (
         <header style={headStyle}>
-            <a href='/'>Home</a>
-            <a href='inventory'>Inventory</a>
+            {/* <a href='/'>Home</a>
+            <a href='inventory'>Inventory</a> */}
             <div className="container">
                 <h1> Inventory Manager </h1>
             </div>
