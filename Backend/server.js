@@ -38,7 +38,7 @@ const startServer = async () => {
   // Use the cors middleware
   app.use(cors());
 
-  app.get('/api/data', async (req, res) => {
+  app.get('/api/inventory', async (req, res) => {
     try {
       const [rows] = await connection.execute('SELECT * FROM INVENTORY');
       res.json(rows);

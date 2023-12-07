@@ -56,7 +56,40 @@ function InventoryManager() {
     <div>
       <h1>Inventory Manager</h1>
       <form onSubmit={handleSubmit}>
-        {/* ... (input fields) */}
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="quantity">Quantity:</label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="price">Price:</label>
+          <input
+            type="number"
+            step="0.01"
+            id="price"
+            name="price"
+            value={formData.price}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
         <button type="submit">Add Item</button>
       </form>
       <ul>
