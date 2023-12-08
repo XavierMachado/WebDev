@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2/promise');
 const cors = require('cors');
 const readline = require('readline');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 8000;
@@ -35,10 +36,8 @@ const startServer = async () => {
   const connection = await mysql.createConnection(databaseConfig);
 
   app.use(cors());
-
-  // app.get('/', (req, res) => {
-  //   res.send('Welcome to the Inventory Manager API');
-  // });
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
 
   app.get('/', async (req, res) => {
     try {
@@ -62,7 +61,34 @@ const startServer = async () => {
       res.send('Deleted successfully');
     } catch (error) {
       console.error('Error in /api/inventory route:', error);
-  
+
+      if (error instanceof mysql.Error) {
+        res.status(500).send('Internal Server Error (MySQL)');
+      } else {
+        res.status(500).send('Internal Server Error');
+      }
+    }
+  });
+
+  app.post('/', async (req, res) => {
+    try {
+      const { name, quantity, price } = req.body;
+
+      // Execute the INSERT query without specifying the ID
+      const [result] = await connection.execute(
+        'INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)',
+        [name, quantity, price]
+      );
+
+      // Check if the item was added successfully
+      if (result.affectedRows > 0) {
+        res.status(201).send('Item added successfully');
+      } else {
+        res.status(500).send('Failed to add item');
+      }
+    } catch (error) {
+      console.error('Error in POST /api/inventory route:', error);
+
       if (error instanceof mysql.Error) {
         res.status(500).send('Internal Server Error (MySQL)');
       } else {
@@ -77,4 +103,3 @@ const startServer = async () => {
 };
 
 startServer();
-//

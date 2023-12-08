@@ -38,7 +38,7 @@ function InventoryManager() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    axios.post('http://localhost:8000/api/inventory', formData)
+    axios.post('http://localhost:8000', formData)
       .then(() => {
         // After successfully adding or editing, fetch updated inventory
         fetchInventory();
