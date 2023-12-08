@@ -47,16 +47,20 @@ function InventoryManager() {
   };
 
   const handleEdit = (id) => {
-    // Fetch the item data based on the id
-    axios.get(`http://localhost:8000/api/inventory/${id}`)
-      .then((response) => {
-        // Set the fetched data to the form for editing
-        setFormData(response.data);
-      })
-      .catch((error) => {
-        console.error('Error fetching item for editing:', error);
-      });
-  };
+  // Find the item in the inventory array with the given 'id'
+  const specificItem = inventory.find(item => item.id === id);
+
+  if (specificItem) {
+    // Now you can use 'specificItem' to perform editing logic
+    setFormData({
+      name: specificItem.name,
+      quantity: specificItem.quantity,
+      price: specificItem.price,
+    });
+  } else {
+    console.error('Item not found for editing');
+  }
+};
   
   const handleDelete = (id) => {
     // Confirm if the user really wants to delete the item
