@@ -134,3 +134,4 @@ function InventoryManager() {
 }
 
 export default InventoryManager;
+//
