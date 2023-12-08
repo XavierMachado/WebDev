@@ -55,6 +55,22 @@ const startServer = async () => {
     }
   });
 
+  app.delete('/:id', async (req, res) => {
+    try {
+      const id = req.params.id;
+      await connection.execute(`DELETE FROM inventory WHERE id=${id}`);
+      res.send('Deleted successfully');
+    } catch (error) {
+      console.error('Error in /api/inventory route:', error);
+  
+      if (error instanceof mysql.Error) {
+        res.status(500).send('Internal Server Error (MySQL)');
+      } else {
+        res.status(500).send('Internal Server Error');
+      }
+    }
+  });
+
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
   });

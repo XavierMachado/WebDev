@@ -68,11 +68,11 @@ function InventoryManager() {
   
   const handleDelete = (id) => {
     // Confirm if the user really wants to delete the item
-    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+    const confirmDelete = window.confirm(`Are you sure you want to delete this item?`);
     
     if (confirmDelete) {
       // Make the delete request
-      axios.delete(`http://localhost:8000/api/inventory/${id}`)
+      axios.delete(`http://localhost:8000/${id}`)
         .then(() => {
           // After successfully deleting, fetch updated inventory
           fetchInventory();
