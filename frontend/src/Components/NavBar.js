@@ -9,8 +9,8 @@ export default function NavBar({title, isLoggedIn}){
   
     return(
     <div>
-      <div id="sidebar" class="sidenav">
-        <button class="closebtn" onClick={close_sidebar}>&times;</button>
+      <div id="sidebar" className="sidenav">
+        <button className="closebtn" onClick={close_sidebar}>&times;</button>
         <a href="/">Home</a>
         {isLoggedIn && (
         <>
@@ -25,7 +25,7 @@ export default function NavBar({title, isLoggedIn}){
         )}
       </div>
       <span style={{fontSize:'30px', cursor: 'pointer', padding: '15px' }} onClick={open_sidebar}>&#9776;</span>
-      <h1 class="htitle">{title}</h1>
+      <h1 className="htitle">{title}</h1>
     </div>);
   }
   
