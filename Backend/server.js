@@ -54,6 +54,17 @@ const startServer = async () => {
     }
   });
 
+  app.post('/', async (req, res) => {
+    try {
+      const { name, quantity, price } = req.body;
+      await connection.execute(`INSERT INTO inventory (name, quantity, price) VALUES ('${name}', ${quantity}, ${price})`);
+      res.send('Added successfully');
+    } catch (error) {
+      console.error('Error adding/editing inventory:', error);
+      res.status(500).send(error);
+    }
+  });  
+
   app.delete('/:id', async (req, res) => {
     try {
       const id = req.params.id;
