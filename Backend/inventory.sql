@@ -16,7 +16,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (name, email, password)
-VALUES('admin', 'password')
+VALUES('admin', NULL, 'password');
 
 INSERT INTO inventory (name, quantity, price)
 VALUES
