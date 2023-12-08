@@ -24,16 +24,13 @@ const RegistrationPage = () => {
     try {
       axios.post('http://localhost:8000/register', formData)
     .then(() => {
-      navigate('/inventory');
+      // Redirect to the login page after successful registration
+      navigate('/LoginPage');
     })
     .catch((error) => {
       setMessage(error.response.data.toString());
       console.error('Registration error:', error);
     });
-      console.log('Registration data:', formData);
-
-      // Redirect to the login page after successful registration
-      navigate('/LoginPage');
     } catch (error) {
       setError('Registration failed. Please check your input and try again.');
       console.error('Registration error:', error);
@@ -46,6 +43,7 @@ const RegistrationPage = () => {
       <header>
         <h1>Registration Page</h1>
       </header>
+      {message && <p>{message}</p>}
       <form onSubmit={handleRegistration}>
         <div>
           <label htmlFor="name">User</label>
