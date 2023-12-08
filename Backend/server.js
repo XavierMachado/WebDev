@@ -43,8 +43,15 @@ const startServer = async () => {
       const [rows] = await connection.execute('SELECT * FROM inventory');
       res.json(rows);
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
+      console.error('Error in /api/inventory route:', error);
+  
+      if (error instanceof mysql.Error) {
+        // Handle MySQL-specific errors
+        res.status(500).send('Internal Server Error (MySQL)');
+      } else {
+        // Handle other types of errors
+        res.status(500).send('Internal Server Error');
+      }
     }
   });
 
