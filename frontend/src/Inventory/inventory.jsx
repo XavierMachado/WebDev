@@ -122,7 +122,7 @@ function InventoryManager() {
             required
           />
         </div>
-        <button type="submit">Add Item</button>
+        <button type="submit">Submit</button>
       </form>
       <ul>
         {inventory.map((item) => (
