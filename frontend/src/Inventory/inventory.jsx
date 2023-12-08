@@ -123,7 +123,11 @@ function InventoryManager() {
       <ul>
         {inventory.map((item) => (
           <li key={item.id}>
-            {/* ... (display item details) */}
+            <div>
+              <p>Name: {item.name}</p>
+              <p>Quantity: {item.quantity}</p>
+              <p>Price: ${item.price}</p>
+            </div>
             <button onClick={() => handleEdit(item.id)}>Edit</button>
             <button onClick={() => handleDelete(item.id)}>Delete</button>
           </li>

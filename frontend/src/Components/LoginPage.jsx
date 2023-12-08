@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import NavBar from "./NavBar.js";
 
 const LoginPage = () => {
@@ -8,13 +7,8 @@ const LoginPage = () => {
   const [message, setMessage] = useState('');
 
   const handleLogin = () => {
-    axios.get('http://localhost:8000').then(
-      (res) => {
-        console.log(res);
-        setMessage(res.data);
-      }
-    );
     navigate('/inventory');
+    setMessage();
   };
 
   return (
