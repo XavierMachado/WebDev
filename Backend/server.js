@@ -57,13 +57,24 @@ const startServer = async () => {
   app.post('/', async (req, res) => {
     try {
       const { name, quantity, price } = req.body;
-      await connection.execute(`INSERT INTO inventory (name, quantity, price) VALUES ('${name}', ${quantity}, ${price})`);
-      res.send('Added successfully');
+  
+      const [existingItem] = await connection.execute(`SELECT * FROM inventory WHERE name = ?`, [name]);
+      if (existingItem.length > 0) {
+        await connection.execute(
+          `UPDATE inventory SET quantity = ?, price = ? WHERE name = ?`,
+          [quantity, price, name]
+        );
+        res.send('Updated successfully');
+      } else {
+        // Item does not exist, insert a new record
+        await connection.execute(`INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)`, [name, quantity, price]);
+        res.send('Added successfully');
+      }
     } catch (error) {
       console.error('Error adding/editing inventory:', error);
       res.status(500).send(error);
     }
-  });  
+  });
 
   app.delete('/:id', async (req, res) => {
     try {
