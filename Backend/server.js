@@ -119,18 +119,17 @@ const startServer = async () => {
       console.error('Error comparing passwords:', error);
       res.status(500).send('Internal Server Error');
     }
-    console.log('asdfasdfasdf')
   });
 
   app.post('/register', async (req, res) => {
     try {
-      const { name, username, password } = req.body;
+      const { name, email, password } = req.body;
   
       // Hash the password before storing it
       const hashedPassword = await bcrypt.hash(password, 10);
   
       // Store user data in your 'USERS' table
-      await connection.execute('INSERT INTO users (name, username, password) VALUES (?, ?, ?)', [name, username, hashedPassword]);
+      await connection.execute('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
   
       res.status(201).json({
         message: 'User registered successfully',
