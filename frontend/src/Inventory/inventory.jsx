@@ -47,11 +47,32 @@ function InventoryManager() {
   };
 
   const handleEdit = (id) => {
-    // Implement edit functionality using axios
+    // Fetch the item data based on the id
+    axios.get(`http://localhost:8000/api/inventory/${id}`)
+      .then((response) => {
+        // Set the fetched data to the form for editing
+        setFormData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching item for editing:', error);
+      });
   };
-
+  
   const handleDelete = (id) => {
-    // Implement delete functionality using axios
+    // Confirm if the user really wants to delete the item
+    const confirmDelete = window.confirm("Are you sure you want to delete this item?");
+    
+    if (confirmDelete) {
+      // Make the delete request
+      axios.delete(`http://localhost:8000/api/inventory/${id}`)
+        .then(() => {
+          // After successfully deleting, fetch updated inventory
+          fetchInventory();
+        })
+        .catch((error) => {
+          console.error('Error deleting item:', error);
+        });
+    }
   };
 
   return (
