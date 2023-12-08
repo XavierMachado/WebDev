@@ -110,8 +110,9 @@ const startServer = async () => {
   
     try {
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ username: user.username }, SECRET_KEY);
-        res.json({ token });
+        res.status(201).json({
+          message: 'User login successful',
+        });
       } else {
         res.status(401).send('Invalid password');
       }
