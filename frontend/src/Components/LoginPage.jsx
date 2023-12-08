@@ -20,7 +20,7 @@ const LoginPage = () => {
     e.preventDefault();
     axios.post('http://localhost:8000/login', formData)
     .then(() => {
-      //navigate('/inventory');
+      navigate('/inventory');
     })
     .catch((error) => {
       setMessage(error.response.data.toString());

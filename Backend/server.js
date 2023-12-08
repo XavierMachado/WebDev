@@ -122,6 +122,27 @@ const startServer = async () => {
     console.log('asdfasdfasdf')
   });
 
+  app.post('/register', async (req, res) => {
+    try {
+      const { name, username, password } = req.body;
+  
+      // Hash the password before storing it
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Store user data in your 'USERS' table
+      await connection.execute('INSERT INTO users (name, username, password) VALUES (?, ?, ?)', [name, username, hashedPassword]);
+  
+      res.status(201).json({
+        message: 'User registered successfully',
+      });
+    } catch (error) {
+      console.error('Registration error:', error);
+      res.status(500).json({
+        message: 'Internal Server Error',
+      });
+    }
+  });
+  
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

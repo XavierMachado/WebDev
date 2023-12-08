@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 import NavBar from "./NavBar.js";
-
+import axios from 'axios';
 
 const RegistrationPage = () => {
   const navigate = useNavigate();  // Use useNavigate hook
+  const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,7 +22,14 @@ const RegistrationPage = () => {
     e.preventDefault();
 
     try {
-      // Your registration logic here
+      axios.post('http://localhost:8000/register', formData)
+    .then(() => {
+      navigate('/inventory');
+    })
+    .catch((error) => {
+      setMessage(error.response.data.toString());
+      console.error('Registration error:', error);
+    });
       console.log('Registration data:', formData);
 
       // Redirect to the login page after successful registration
