@@ -16,8 +16,12 @@ function InventoryManager() {
     fetchInventory();
   }, []);
 
+  const axiosInstance = axios.create({
+    baseURL: 'http://localhost:8000',
+  });
+
   const fetchInventory = () => {
-    axios.get('http://localhost:8000/api/inventory')
+    axiosInstance.get('/')
       .then((response) => {
         setInventory(response.data);
       })
