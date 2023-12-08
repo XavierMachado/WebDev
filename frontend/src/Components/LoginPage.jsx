@@ -8,12 +8,6 @@ const LoginPage = () => {
   const [message, setMessage] = useState('');
 
   const handleLogin = () => {
-    axios.get('http://localhost:8000').then(
-      (res) => {
-        console.log(res);
-        setMessage(res.data);
-      }
-    );
     navigate('/inventory');
   };
 
