@@ -17,7 +17,7 @@ function App() {
             }>
             </Route>
             <Route path="/RegistrationPage" element= {<RegistrationPage/>}></Route>
-            <Route path = '/inventory' element= {<Inventory/>} isLoggedIn={true}></Route>
+            <Route path = '/inventory' element= {<Inventory/>}></Route>
             <Route path="/LoginPage" element= {<LoginPage/>}></Route>
         </Routes>
             </div>

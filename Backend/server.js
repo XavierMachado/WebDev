@@ -3,6 +3,7 @@ const mysql = require('mysql2/promise');
 const cors = require('cors');
 const readline = require('readline');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const port = 8000;
@@ -92,32 +93,35 @@ const startServer = async () => {
     }
   });
 
-  app.post('/', async (req, res) => {
+  async function getUserByEmail(email) {
+    const [rows] = await connection.execute('SELECT * FROM users WHERE email = ?', [email]);
+    return rows[0];
+  }
+
+  app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+  
+    // Authenticate user
+    const user = await getUserByEmail(email);
+  
+    if (user == null) {
+      return res.status(400).send('Cannot find user');
+    }
+  
     try {
-      const { name, quantity, price } = req.body;
-
-      // Execute the INSERT query without specifying the ID
-      const [result] = await connection.execute(
-        'INSERT INTO inventory (name, quantity, price) VALUES (?, ?, ?)',
-        [name, quantity, price]
-      );
-
-      // Check if the item was added successfully
-      if (result.affectedRows > 0) {
-        res.status(201).send('Item added successfully');
+      if (await bcrypt.compare(password, user.password)) {
+        const token = jwt.sign({ username: user.username }, SECRET_KEY);
+        res.json({ token });
       } else {
-        res.status(500).send('Failed to add item');
+        res.status(401).send('Invalid password');
       }
     } catch (error) {
-      console.error('Error in POST /api/inventory route:', error);
-
-      if (error instanceof mysql.Error) {
-        res.status(500).send('Internal Server Error (MySQL)');
-      } else {
-        res.status(500).send('Internal Server Error');
-      }
+      console.error('Error comparing passwords:', error);
+      res.status(500).send('Internal Server Error');
     }
+    console.log('asdfasdfasdf')
   });
+
 
   app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
